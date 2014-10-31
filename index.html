@@ -1,38 +1,10 @@
+<!DOCTYPE HTML>
 <html>
 <head>
 	<title>Fill Example</title>
-
-
-	<style type="text/css">
-		.white{
-			display:inline-block;
-			width:50px;
-			height:50px;
-			border:1px solid black;
-		}
-		.blue{
-			display:inline-block;
-			background-color:blue;
-			width:50px;
-			height:50px;
-			border:1px solid black;
-		}
-		.yellow{
-			display:inline-block;
-			background-color:yellow;
-			width:50px;
-			height:50px;
-			border:1px solid black;
-		}
-		.green{
-			display:inline-block;
-			background-color:green;
-			width:50px;
-			height:50px;
-			border:1px solid black;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="css-index.css">
 </head>
+
 <body>
 
 	<div id='shape'>
@@ -57,9 +29,11 @@
 		0: 'white',
 		1: 'blue',
 		2: 'green',
-		3: 'yellow'
+		3: 'yellow',
+		4: 'pink'
 	}
-
+	var x = 3, y = 3, newColor = 1;
+	
 	function drawShape(){
 		var output = '';
 		for(var i=0; i<world.length; i++)
@@ -74,11 +48,28 @@
 		document.getElementById('shape').innerHTML = output;
 	}
 
-	drawShape();
+		
+	 function fillInit(x, y) { 
+	 		fill(x, y, world[x][y]); 
+	 		drawShape();
+	 	} 
 
 
-	fill(2,3, 'green');
-	fill(1,1, 'yellow');
+	 function fill(x, y, origColor) { 
+	 	if(x >= 0 && y >= 0 && x < world.length && y < world[x].length) { 
+	 		if(world[x][y] === origColor) { 
+	 			world[x][y] = newColor; 
+		
+	 			fill(x - 1, y, origColor); 
+	 			fill(x + 1, y, origColor);
+	 			fill(x, y - 1, origColor);
+	 			fill(x, y + 1, origColor); 
+	 		} 
+	 	} 
+	}
+
+drawShape();	
+fillInit(x, y);
 
 </script>
 
